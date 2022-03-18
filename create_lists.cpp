@@ -4,8 +4,12 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #define MIN_FREQ 1296
+
+// AUTHOR: Joe Marcinuk
+// LAST EDIT: 3/17/2022
 
 // structure denoting a word occurence
 // contains the string of the word and an integer representing its frequency
@@ -105,6 +109,106 @@ void remove_triple_letters() {
     std::cout << "---Removed " << diff << " entries" << '\n' << "==========================================================" << '\n' << '\n';
 }
 
+
+/*
+There is a file in this directory called placenames.txt
+It contains a list of place names that are 6-letters long. The list was combed by hand to remove place names that are also regular words
+Removes instances of many proper nouns from the word list
+There are 2652 place names in the placenames list
+
+This one requires each word to be compared to the list of places which takes a long time. Therefore it will be done later when the list is smaller
+*/
+void remove_placenames() {
+    word_occ ptr;
+
+    // catalogue starting data for analysis purposes
+    std::cout << "Removing placenames." << '\n';
+    std::cout << "Starting list size is: " << words_vector.size() << '\n';
+    int start = words_vector.size();
+
+    // create new vector of placenames, this will go out of scope when the function completes
+    std::vector<std::string> placenames;
+    std::ifstream placenames_list;
+    placenames_list.open("placenames.txt");
+
+    std::string line;
+    std::string place;
+    while (getline(placenames_list, line)) {
+        std::istringstream ss(line);
+        ss >> place;
+
+        placenames.push_back(place);
+    }
+
+    // for each word in the master list, check if it also exists in the list of placenames
+    for (std::vector<word_occ>::iterator it = words_vector.begin(); it != words_vector.end(); ++it) {
+        ptr = *it;
+
+        std::string this_word = ptr.word;
+
+        // if so, delete it
+        if (std::find(placenames.begin(), placenames.end(), this_word) != placenames.end()) {
+            words_vector.erase(it);
+        }
+    }
+
+    // output how many words remain and the amount of words removed for analysis purposes
+    std::cout << "Size after removing words with 3 or more consecutive letters is: " << words_vector.size() << '\n';
+    int diff = start - words_vector.size();
+    std::cout << "---Removed " << diff << " entries" << '\n' << "==========================================================" << '\n' << '\n';
+}
+
+// a bigram is any pair of letters found in a word
+// there are many common bigrams in english like 'th' and 'ea'
+// there are also many bigrams that do not exist.
+// there are 110 bigrams that do not exist in the english language
+// this function is long, but it will remove all words that contain bigrams not found in english words
+void remove_missing_bigrams() {
+    word_occ ptr;
+
+    // catalogue starting data for analysis purposes
+    std::cout << "Removing non-english bigrams." << '\n';
+    std::cout << "Starting list size is: " << words_vector.size() << '\n';
+    int start = words_vector.size();
+
+    std::ifstream bigrams_list;
+    bigrams_list.open("unique_missing_bigrams.txt");
+
+    std::string line;
+    std::string bigram;
+
+    std::vector<std::string> disallowed_bigrams;
+
+    while (getline(bigrams_list, line)) {
+        std::istringstream ss(line);
+        ss >> bigram;
+        disallowed_bigrams.push_back(bigram);
+    }
+
+    for (std::vector<word_occ>::iterator it = words_vector.begin(); it != words_vector.end(); ++it) {
+        ptr = *it;
+        const char* wordc = ptr.word.c_str();
+
+        std::string rb = ""; // reference bigram
+
+        for (int i = 0; i < strlen(wordc); i++) {
+            rb = rb + wordc[i];
+            if (rb.length() == 2) {
+                if (std::find(disallowed_bigrams.begin(), disallowed_bigrams.end(), rb) != disallowed_bigrams.end()) {
+                    words_vector.erase(it);
+                }
+                rb = "";
+                rb = rb + wordc[i];
+            }
+        }
+    }
+
+    // output how many words remain and the amount of words removed for analysis purposes
+    std::cout << "Size after removing words with 3 or more consecutive letters is: " << words_vector.size() << '\n';
+    int diff = start - words_vector.size();
+    std::cout << "---Removed " << diff << " entries" << '\n' << "==========================================================" << '\n' << '\n';    
+}
+
 int main() {
     // open txt file containing all words
     std::ifstream all_words_list;
@@ -140,6 +244,9 @@ int main() {
     // run the other removal methods, this can be added onto if more methods are written
     remove_vowelless();
     remove_triple_letters();
+    remove_placenames();
+    remove_missing_bigrams();
+
 
     // output the final list into a new txt file containing only the words separated by newlines
     std::ofstream newfile;
