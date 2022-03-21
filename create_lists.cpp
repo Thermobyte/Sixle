@@ -153,7 +153,7 @@ void remove_placenames() {
     }
 
     // output how many words remain and the amount of words removed for analysis purposes
-    std::cout << "Size after removing words with 3 or more consecutive letters is: " << words_vector.size() << '\n';
+    std::cout << "Size after removing place names: " << words_vector.size() << '\n';
     int diff = start - words_vector.size();
     std::cout << "---Removed " << diff << " entries" << '\n' << "==========================================================" << '\n' << '\n';
 }
@@ -204,7 +204,7 @@ void remove_missing_bigrams() {
     }
 
     // output how many words remain and the amount of words removed for analysis purposes
-    std::cout << "Size after removing words with 3 or more consecutive letters is: " << words_vector.size() << '\n';
+    std::cout << "Size after removing non-english bigrams: " << words_vector.size() << '\n';
     int diff = start - words_vector.size();
     std::cout << "---Removed " << diff << " entries" << '\n' << "==========================================================" << '\n' << '\n';    
 }
@@ -247,17 +247,48 @@ int main() {
     remove_placenames();
     remove_missing_bigrams();
 
+    std::cout << "Would you like a list of arrays rather than a regular .txt file? (y/n)\n";
+    std::string user_input;
+    std::cin >> user_input;
 
-    // output the final list into a new txt file containing only the words separated by newlines
-    std::ofstream newfile;
-    newfile.open("updated_words_list.txt");
-    for (int i = 0; i < words_vector.size(); i++) {
-        newfile << words_vector[i].word;
-        newfile << "\n";
+    if (user_input == "y") {
+        std::cout << "Writing files as string arrays.\n";
+
+        // create text files to contain a copy/pasteable array for use in the app
+        std::ofstream answer_arr;
+        std::ofstream guess_arr;
+        answer_arr.open("answer_array.txt");
+        guess_arr.open("allowed_guess_array.txt");
+
+        // create array text for legal guesses
+        guess_arr << "[";
+        for (int i = 0; i < words_vector.size(); i++) {
+            guess_arr << "\"" << words_vector[i].word << "\", ";
+        }
+        guess_arr << "]";
+
+        // create array text for potential answers
+        answer_arr << "[";
+        for (int i = 0; i < 3000; i++) {
+            answer_arr << "\"" << words_vector[i].word << "\", ";
+        }
+        answer_arr << "]";
+
+        answer_arr.close();
+        guess_arr.close();
+    } else {
+        std::cout << "Writing .txt file\n";
+        // output the final list into a new txt file containing only the words separated by newlines
+        std::ofstream newfile;
+        newfile.open("updated_words_list.txt");
+        for (int i = 0; i < words_vector.size(); i++) {
+            newfile << words_vector[i].word;
+            newfile << "\n";
+        }
+
+        // this file is no longer needed, close it
+        newfile.close();   
     }
-
-    // this file is no longer needed, close it
-    newfile.close();
 
     return 0;
 }
