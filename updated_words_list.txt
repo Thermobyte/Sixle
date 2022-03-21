@@ -402,6 +402,7 @@ border
 estate
 proved
 pocket
+joseph
 muscle
 handle
 stable
@@ -1337,6 +1338,7 @@ blades
 licked
 debris
 tugged
+stalin
 gothic
 tasted
 thirds
@@ -1345,11 +1347,14 @@ python
 tackle
 echoes
 treats
+ronald
+wagner
 danish
 quotes
 powell
 racist
 slices
+esther
 gravel
 apollo
 strive
@@ -1546,6 +1551,7 @@ hooked
 shocks
 vacant
 psalms
+hawaii
 viewer
 fulfil
 speeds
@@ -1568,6 +1574,7 @@ urging
 thrive
 preach
 richer
+quebec
 feeble
 dakota
 sparks
@@ -1586,6 +1593,7 @@ meadow
 poster
 unesco
 lyrics
+elijah
 horace
 climax
 learns
@@ -2162,6 +2170,7 @@ mantra
 dearly
 rattle
 heroin
+werner
 forums
 risked
 adored
@@ -2213,6 +2222,8 @@ invade
 mocked
 screws
 planar
+putnam
+markov
 contra
 undone
 staple
@@ -2886,7 +2897,6 @@ router
 abject
 fodder
 inject
-nigger
 pareto
 boughs
 waning
@@ -2987,7 +2997,6 @@ scotia
 altars
 sloppy
 slater
-fuckin
 boyish
 shaggy
 scents
@@ -3356,7 +3365,6 @@ barter
 techno
 sergio
 saxons
-shitty
 quorum
 stasis
 radiol
@@ -4047,7 +4055,6 @@ bygone
 guerre
 wagged
 heeded
-fucker
 brahma
 chisel
 necked
@@ -13235,7 +13242,6 @@ freese
 agouti
 puesto
 granda
-fucken
 essent
 zepeda
 swirly
@@ -15855,7 +15861,6 @@ sillik
 quhilk
 makris
 khazar
-asshat
 sergej
 savard
 rhodri
@@ -15982,7 +15987,6 @@ swojem
 offact
 yoneda
 otiose
-fuckup
 frowsy
 evitar
 weblog
