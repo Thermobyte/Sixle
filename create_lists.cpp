@@ -261,18 +261,18 @@ int main() {
         guess_arr.open("allowed_guess_array.txt");
 
         // create array text for legal guesses
-        guess_arr << "[";
+        guess_arr << "{";
         for (int i = 0; i < words_vector.size(); i++) {
             guess_arr << "\"" << words_vector[i].word << "\", ";
         }
-        guess_arr << "]";
+        guess_arr << "}";
 
         // create array text for potential answers
-        answer_arr << "[";
+        answer_arr << "{";
         for (int i = 0; i < 3000; i++) {
             answer_arr << "\"" << words_vector[i].word << "\", ";
         }
-        answer_arr << "]";
+        answer_arr << "}";
 
         answer_arr.close();
         guess_arr.close();
